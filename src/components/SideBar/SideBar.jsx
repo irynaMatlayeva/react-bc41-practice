@@ -1,16 +1,12 @@
 
 import UserImg from '../../assets/images/mock-user-ava.svg'
+import MenuList from 'components/Menu/MenuList'
+
 
 const SideBar = () => {
 	return (<aside>
 		<div>Title</div>
-		<nav>
-			<ul>
-				<li><a href="/">Университет</a></li>
-				<li><a href="/">Факультеты</a></li>
-			</ul>
-		</nav>
-
+		<MenuList/>
 		<div><img src={UserImg} alt="User" />Бил Гейтс</div>
 	</aside>)
 }
