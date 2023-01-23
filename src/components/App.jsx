@@ -1,7 +1,9 @@
+import SideBar from "./SideBar/SideBar";
+
 export const App = () => {
   return (
     <div className='app'>
-      <div>Sidebar</div>
+      <SideBar></SideBar>
       <div>Main</div>
     </div>
   );
