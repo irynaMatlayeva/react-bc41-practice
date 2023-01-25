@@ -1,3 +1,4 @@
+import PT from 'prop-types';
 import { Paper } from 'components';
 import universityIcon from '../../assets/images/mock-university.svg';
 import editButtonIcon from '../../assets/images/edit.svg';
@@ -31,3 +32,9 @@ const UniversityCard = ({ name, onEdit, onDelete }) => {
 };
 
 export default UniversityCard;
+
+UniversityCard.propTypes = {
+  name: PT.string.isRequired,
+  onEdit: PT.func.isRequired,
+  onDelete: PT.func.isRequired,
+};

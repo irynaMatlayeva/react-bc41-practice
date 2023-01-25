@@ -1,3 +1,4 @@
+import PT from 'prop-types';
 import css from './Paper.module.css';
 
 const Paper = ({ children, classes, ...otherProps }) => {
@@ -9,3 +10,9 @@ const Paper = ({ children, classes, ...otherProps }) => {
 };
 
 export default Paper;
+
+Paper.propTypes = {
+  classes: PT.string,
+  children: PT.node.isRequired,
+  otherProps: PT.node,
+};
