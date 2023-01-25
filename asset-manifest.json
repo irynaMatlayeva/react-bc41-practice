@@ -1,19 +1,16 @@
 {
   "files": {
     "main.css": "/react-homework-template/static/css/main.45a5c88d.css",
-    "main.js": "/react-homework-template/static/js/main.644f5d9a.js",
+    "main.js": "/react-homework-template/static/js/main.07681e58.js",
     "static/media/mock-university.svg": "/react-homework-template/static/media/mock-university.650dfc1db07a57b5376badfdaf40c154.svg",
-    "static/media/faculties-icon.svg": "/react-homework-template/static/media/faculties-icon.12acb9717b7065272c8041de24eb490c.svg",
     "static/media/delete.svg": "/react-homework-template/static/media/delete.677d38a82de5abc1f9234f87ea3bf592.svg",
     "static/media/edit.svg": "/react-homework-template/static/media/edit.1ccf0f6fedc395fb09177a40acb5b5d3.svg",
-    "static/media/mock-user-ava.svg": "/react-homework-template/static/media/mock-user-ava.dc938224d592de20b85ec3d88f5d791b.svg",
     "index.html": "/react-homework-template/index.html",
-    "static/media/university-icon.svg": "/react-homework-template/static/media/university-icon.55603ce28345549d65a14a63969995e0.svg",
     "main.45a5c88d.css.map": "/react-homework-template/static/css/main.45a5c88d.css.map",
-    "main.644f5d9a.js.map": "/react-homework-template/static/js/main.644f5d9a.js.map"
+    "main.07681e58.js.map": "/react-homework-template/static/js/main.07681e58.js.map"
   },
   "entrypoints": [
     "static/css/main.45a5c88d.css",
-    "static/js/main.644f5d9a.js"
+    "static/js/main.07681e58.js"
   ]
 }
