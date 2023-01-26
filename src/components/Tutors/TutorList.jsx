@@ -2,7 +2,9 @@ import PT from 'prop-types';
 import TutorsItem from './TutorsItem';
 
 const TutorList = ({ tutors }) => {
-  return tutors.map(tutor => <TutorsItem key={tutor.phone} {...tutor} />);
+  return tutors.map(tutor => (
+    <TutorsItem key={tutor.phone} name={tutor.firsName} {...tutor} />
+  ));
 };
 
 export default TutorList;
