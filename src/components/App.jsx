@@ -7,6 +7,7 @@ import {
   TutorList,
   Section,
   GeneralCardList,
+  Button,
 } from '../components';
 import universityData from '../constants/universityData.json';
 
@@ -49,18 +50,21 @@ class App extends Component {
           </Section>
           <Section image={tutorIcon} title="Преподаватели">
             <TutorList tutors={tutors} />
+            <Button text={'Добавить преподавателя'} icon />
           </Section>
           <Section>
             <GeneralCardList
               listData={cities}
               isOpenDown={this.handleToggleMenu}
             />
+            <Button text={'Добавить город'} icon />
           </Section>
           <Section>
             <GeneralCardList
               listData={departments}
               isOpenDown={this.handleToggleMenu}
             />
+            <Button text={'Добавить факультет'} icon />
           </Section>
         </Main>
       </div>
