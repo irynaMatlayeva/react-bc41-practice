@@ -8,6 +8,7 @@ import {
   Section,
   GeneralCardList,
   Button,
+  TutorForm,
 } from '../components';
 import universityData from '../constants/universityData.json';
 
@@ -32,6 +33,14 @@ class App extends Component {
   onEdit = () => console.log('edit');
   onDelete = () => console.log('delete');
 
+  addTutor = tutor => {
+    this.setState(({ tutors }) => {
+      return {
+        tutors: [...tutors, tutor],
+      };
+    });
+  };
+
   render() {
     const { cities, departments, tutors } = this.state;
     return (
@@ -50,6 +59,7 @@ class App extends Component {
           </Section>
           <Section image={tutorIcon} title="Преподаватели">
             <TutorList tutors={tutors} />
+            <TutorForm addTutor={this.addTutor} />
             <Button text={'Добавить преподавателя'} icon />
           </Section>
           <Section>
