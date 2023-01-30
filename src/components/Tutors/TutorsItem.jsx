@@ -10,6 +10,7 @@ const TutorsItem = ({
   email,
   city,
   options,
+  deleteTutor,
 }) => {
   return (
     <Paper>
@@ -26,6 +27,11 @@ const TutorsItem = ({
         </ColumnItem>
         <ColumnItem>
           <p>{options}</p>
+        </ColumnItem>
+        <ColumnItem>
+          <button type="button" onClick={() => deleteTutor(firstName)}>
+            Delete
+          </button>
         </ColumnItem>
       </Container>
     </Paper>
