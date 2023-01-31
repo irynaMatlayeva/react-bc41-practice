@@ -6,3 +6,5 @@ export { default as TutorList } from './Tutors/TutorList';
 export { default as Section } from './Section/Section';
 export { default as GeneralCardList } from './GeneralCard/GeneralCardList';
 export { default as Button } from './Button/Button';
+export { default as TutorForm } from './Forms/TutorForm';
+export { default as InfoForm } from './Forms/InfoForm';

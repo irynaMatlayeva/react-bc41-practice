@@ -1,4 +1,8 @@
-import { Field, Form, Formik } from 'formik';
+import { Formik, Form } from 'formik';
+import { FieldStyled, ErrMessage } from './TutorForm.styled';
+import { object, string } from 'yup';
+import { Button } from 'components';
+
 const fieldsData = [
   { name: 'lastName', label: 'Прізвище' },
   { name: 'firstName', label: 'Імʼя' },
@@ -7,22 +11,43 @@ const fieldsData = [
   { name: 'email', label: 'Емеіл' },
   { name: 'city', label: 'Місто' },
 ];
-const TutorForm = () => {
+
+const validationSchemaForm = object().shape({
+  firstName: string().required('Заповніть це поле'),
+  lastName: string()
+    .min(2, 'Введіть мінімальну кількість символів')
+    .max(9, 'Ви ввели забагато символів')
+    .required(),
+  patronymic: string().required(),
+  phone: string().required(),
+  email: string().required(),
+  city: string().required(),
+});
+
+const TutorForm = ({ addTutor }) => {
   const initialValues = {
     firstName: '',
     lastName: '',
     patronymic: '',
     phone: '',
+    email: '',
     city: '',
   };
+
   const handleSubmitForm = (values, { setSubmitting, resetForm }) => {
-    console.log('🚀 ~ values', values);
     setSubmitting(true);
+    console.log('🚀 ~ values', values);
+    addTutor(values);
     resetForm();
     setSubmitting(false);
   };
+
   return (
-    <Formik initialValues={initialValues} onSubmit={handleSubmitForm}>
+    <Formik
+      validationSchema={validationSchemaForm}
+      initialValues={initialValues}
+      onSubmit={handleSubmitForm}
+    >
       {({
         values,
         errors,
@@ -38,7 +63,7 @@ const TutorForm = () => {
           {fieldsData.map(({ name, label }) => {
             return (
               <div key={name}>
-                <Field
+                <FieldStyled
                   type="text"
                   id={name}
                   name={name}
@@ -46,12 +71,13 @@ const TutorForm = () => {
                   onBlur={handleBlur}
                   onChange={handleChange}
                   value={values[name] || ''}
-                ></Field>
+                />
+                <ErrMessage component="div" name={name} />
               </div>
             );
           })}
 
-          <button type="submit">Submit</button>
+          <Button text="add" type="submit" />
         </Form>
       )}
     </Formik>

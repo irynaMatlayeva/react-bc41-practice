@@ -1,9 +1,9 @@
 import PT from 'prop-types';
 import TutorsItem from './TutorsItem';
 
-const TutorList = ({ tutors }) => {
+const TutorList = ({ tutors, deleteTutor }) => {
   return tutors.map(tutor => (
-    <TutorsItem key={tutor.phone} name={tutor.firsName} {...tutor} />
+    <TutorsItem key={tutor.phone} {...tutor} deleteTutor={deleteTutor} />
   ));
 };
 

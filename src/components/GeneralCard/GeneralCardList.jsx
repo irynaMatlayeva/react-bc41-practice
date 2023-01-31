@@ -1,10 +1,17 @@
 import GeneralCardItem from './GeneralCardItem';
 
-const GeneralCardList = ({ listData, isOpenDown }) => {
+const GeneralCardList = ({ listData, isOpenDown, onDeleteCard }) => {
   return (
     <ul>
-      {listData.map(({ text }) => (
-        <GeneralCardItem key={text} text={text} isOpenDown={isOpenDown} />
+      {listData.map(({ text, relation }) => (
+        <GeneralCardItem
+          id={text}
+          key={text}
+          text={text}
+          isOpenDown={isOpenDown}
+          onDeleteCard={onDeleteCard}
+          relation={relation}
+        />
       ))}
     </ul>
   );
