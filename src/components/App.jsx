@@ -12,7 +12,6 @@ import {
   InfoForm,
 } from '../components';
 import universityData from '../constants/universityData.json';
-
 import tutorIcon from '../assets/images/teachers-emoji.png';
 import FORMS from '../constants/forms';
 
@@ -21,11 +20,13 @@ class App extends Component {
     cities:
       universityData.cities.map(city => ({
         text: city,
+        relation: 'cities',
       })) ?? [],
 
     departments:
       universityData.department.map(({ name }) => ({
         text: name,
+        relation: 'departments',
       })) ?? [],
     tutors: universityData.tutors ?? [],
     showForm: null,
@@ -33,6 +34,7 @@ class App extends Component {
   handleToggleMenu = () => {
     console.log('click');
   };
+
   onEdit = () => console.log('edit');
   onDelete = () => console.log('delete');
 
@@ -89,7 +91,15 @@ class App extends Component {
     }
   };
 
+
+  handleDeleteCard = (id, relation) => {
+    this.setState(prev => ({
+      [relation]: prev[relation].filter(({ text }) => text !== id),
+    }));
+  };
+
   render() {
+    console.log(this.state.cities);
     const { cities, departments, tutors } = this.state;
     //  console.log(this.state.showForm);
     return (
@@ -113,12 +123,19 @@ class App extends Component {
             )}
             <Button
               action={() => this.handleShowForm(FORMS.TUTOR_FORM)}
-              text={'Добавить преподавателя'}
+
+              text={
+                this.state.showForm === FORMS.TUTOR_FORM
+                  ? 'Закрити форму'
+                  : 'Добавить преподавателя'
+              }
+
               icon
             />
           </Section>
           <Section>
             <GeneralCardList
+              onDeleteCard={this.handleDeleteCard}
               listData={cities}
               isOpenDown={this.handleToggleMenu}
             />
@@ -131,13 +148,20 @@ class App extends Component {
             )}
             <Button
               action={() => this.handleShowForm(FORMS.CITY_FORM)}
-              text={'Добавить город'}
+
+              text={
+                this.state.showForm === FORMS.CITY_FORM
+                  ? 'Закрити форму'
+                  : 'Добавить город'
+              }
+
               icon
             />
           </Section>
 
           <Section>
             <GeneralCardList
+              onDeleteCard={this.handleDeleteCard}
               listData={departments}
               isOpenDown={this.handleToggleMenu}
             />
@@ -150,7 +174,12 @@ class App extends Component {
             )}
             <Button
               action={() => this.handleShowForm(FORMS.DEPARTMENTS_FORM)}
-              text={'Добавить факультет'}
+              text={
+                this.state.showForm === FORMS.DEPARTMENTS_FORM
+                  ? 'Закрити форму'
+                  : 'Добавить факультет'
+              }
+
               icon
             />
           </Section>
