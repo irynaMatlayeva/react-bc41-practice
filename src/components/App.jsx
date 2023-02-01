@@ -91,6 +91,7 @@ class App extends Component {
     }
   };
 
+
   handleDeleteCard = (id, relation) => {
     this.setState(prev => ({
       [relation]: prev[relation].filter(({ text }) => text !== id),
@@ -122,11 +123,13 @@ class App extends Component {
             )}
             <Button
               action={() => this.handleShowForm(FORMS.TUTOR_FORM)}
+
               text={
                 this.state.showForm === FORMS.TUTOR_FORM
                   ? 'Закрити форму'
                   : 'Добавить преподавателя'
               }
+
               icon
             />
           </Section>
@@ -145,11 +148,13 @@ class App extends Component {
             )}
             <Button
               action={() => this.handleShowForm(FORMS.CITY_FORM)}
+
               text={
                 this.state.showForm === FORMS.CITY_FORM
                   ? 'Закрити форму'
                   : 'Добавить город'
               }
+
               icon
             />
           </Section>
@@ -174,6 +179,7 @@ class App extends Component {
                   ? 'Закрити форму'
                   : 'Добавить факультет'
               }
+
               icon
             />
           </Section>
