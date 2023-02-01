@@ -28,12 +28,12 @@ class App extends Component {
         text: name,
         relation: 'departments',
       })) ?? [],
+
     tutors: universityData.tutors ?? [],
     showForm: null,
+    isModalOpen: null,
   };
-  handleToggleMenu = () => {
-    console.log('click');
-  };
+  handleToggleMenu = () => {};
 
   onEdit = () => console.log('edit');
   onDelete = () => console.log('delete');
@@ -47,7 +47,6 @@ class App extends Component {
   };
 
   deleteTutor = name => {
-    //  console.log(email);
     this.setState(({ tutors }) => {
       return {
         tutors: [...tutors].filter(({ firstName }) => firstName !== name),
@@ -91,17 +90,20 @@ class App extends Component {
     }
   };
 
-
   handleDeleteCard = (id, relation) => {
     this.setState(prev => ({
       [relation]: prev[relation].filter(({ text }) => text !== id),
     }));
   };
 
+  toggleModal = action => {
+    this.setState({ isModalOpen: action });
+  };
+
   render() {
-    console.log(this.state.cities);
-    const { cities, departments, tutors } = this.state;
-    //  console.log(this.state.showForm);
+    const { cities, departments, tutors, isModalOpen } = this.state;
+    console.log('cities', cities);
+
     return (
       <div className="app">
         <SideBar></SideBar>
@@ -116,6 +118,7 @@ class App extends Component {
               <span>{universityData.description}</span>
             </Paper>
           </Section>
+
           <Section image={tutorIcon} title="Преподаватели">
             <TutorList deleteTutor={this.deleteTutor} tutors={tutors} />
             {this.state.showForm === FORMS.TUTOR_FORM && (
@@ -123,13 +126,11 @@ class App extends Component {
             )}
             <Button
               action={() => this.handleShowForm(FORMS.TUTOR_FORM)}
-
               text={
                 this.state.showForm === FORMS.TUTOR_FORM
                   ? 'Закрити форму'
                   : 'Добавить преподавателя'
               }
-
               icon
             />
           </Section>
@@ -138,6 +139,8 @@ class App extends Component {
               onDeleteCard={this.handleDeleteCard}
               listData={cities}
               isOpenDown={this.handleToggleMenu}
+              toggleModal={this.toggleModal}
+              isOpenModal={isModalOpen}
             />
             {this.state.showForm === FORMS.CITY_FORM && (
               <InfoForm
@@ -148,13 +151,11 @@ class App extends Component {
             )}
             <Button
               action={() => this.handleShowForm(FORMS.CITY_FORM)}
-
               text={
                 this.state.showForm === FORMS.CITY_FORM
                   ? 'Закрити форму'
                   : 'Добавить город'
               }
-
               icon
             />
           </Section>
@@ -164,6 +165,8 @@ class App extends Component {
               onDeleteCard={this.handleDeleteCard}
               listData={departments}
               isOpenDown={this.handleToggleMenu}
+              toggleModal={this.toggleModal}
+              isOpenModal={isModalOpen}
             />
             {this.state.showForm === FORMS.DEPARTMENTS_FORM && (
               <InfoForm
@@ -179,7 +182,6 @@ class App extends Component {
                   ? 'Закрити форму'
                   : 'Добавить факультет'
               }
-
               icon
             />
           </Section>

@@ -8,7 +8,6 @@ const InfoForm = ({ onSubmit, title, placeholder }) => {
 
   const handleSubmitForm = (values, { setSubmitting, resetForm }) => {
     setSubmitting(true);
-    console.log('🚀 ~ values', values);
     onSubmit(values.name);
     resetForm();
     setSubmitting(false);
