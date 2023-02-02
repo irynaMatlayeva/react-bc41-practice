@@ -8,3 +8,4 @@ export { default as GeneralCardList } from './GeneralCard/GeneralCardList';
 export { default as Button } from './Button/Button';
 export { default as TutorForm } from './Forms/TutorForm';
 export { default as InfoForm } from './Forms/InfoForm';
+export { default as Modal } from './Modal/Modal';
