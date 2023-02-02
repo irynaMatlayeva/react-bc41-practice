@@ -3,12 +3,13 @@ import { object, string } from 'yup';
 import { ErrMessage } from './TutorForm.styled';
 import { Button } from 'components';
 
-const InfoForm = ({ onSubmit, title, placeholder }) => {
-  const initialValues = { name: '' };
+const InfoForm = ({ onSubmit, title, placeholder, idItem, relation }) => {
+  const initialValues = { name: idItem || ''};
 
   const handleSubmitForm = (values, { setSubmitting, resetForm }) => {
     setSubmitting(true);
-    onSubmit(values.name);
+    const data = idItem ? {id: idItem, relation, name: values.name } : values.name;
+    onSubmit(data);
     resetForm();
     setSubmitting(false);
   };
@@ -46,7 +47,7 @@ const InfoForm = ({ onSubmit, title, placeholder }) => {
             <ErrMessage component="div" name="name" />
           </div>
 
-          <Button text="add" type="submit" />
+          <Button text={idItem ? "save" : "add"} type="submit" />
         </Form>
       )}
     </Formik>
