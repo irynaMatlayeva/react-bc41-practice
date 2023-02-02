@@ -41,7 +41,8 @@ class App extends Component {
   addTutor = tutor => {
     this.setState(({ tutors }) => {
       return {
-        tutors: [...tutors, tutor], showForm: null
+        tutors: [...tutors, tutor],
+        showForm: null,
       };
     });
   };
@@ -70,7 +71,8 @@ class App extends Component {
     } else {
       const newCity = { text: name, relation: 'cities' };
       this.setState(prev => ({
-        cities: [...prev.cities, newCity],  showForm: null 
+        cities: [...prev.cities, newCity],
+        showForm: null,
       }));
     }
   };
@@ -85,7 +87,8 @@ class App extends Component {
     } else {
       const newDepartment = { text: name, relation: 'departments' };
       this.setState(prev => ({
-        departments: [...prev.departments, newDepartment], showForm: null
+        departments: [...prev.departments, newDepartment],
+        showForm: null,
       }));
     }
   };
@@ -97,12 +100,24 @@ class App extends Component {
   };
 
   toggleModal = action => {
-    this.setState(prev => ({isModalOpen: prev.isModalOpen === action ? null : action}));
+    this.setState(prev => ({
+      isModalOpen: prev.isModalOpen === action ? null : action,
+    }));
   };
 
-  handleEditCard = (data) => {
-    console.log(data)
-  }
+  handleEditCard = data => {
+    const { id, name, relation } = data;
+
+    const findIndex = this.state[relation].findIndex(item => item.text === id);
+
+    this.setState(prevState => ({
+      [relation]: [
+        ...prevState[relation].slice(0, findIndex),
+        { text: name, relation },
+        ...prevState[relation].slice(findIndex + 1),
+      ],
+    }));
+  };
 
   render() {
     const { cities, departments, tutors, isModalOpen } = this.state;
@@ -145,7 +160,7 @@ class App extends Component {
               isOpenDown={this.handleToggleMenu}
               toggleModal={this.toggleModal}
               isOpenModal={isModalOpen}
-              onEditCard ={this.handleEditCard}
+              onEditCard={this.handleEditCard}
             />
             {this.state.showForm === FORMS.CITY_FORM && (
               <InfoForm
@@ -172,7 +187,7 @@ class App extends Component {
               isOpenDown={this.handleToggleMenu}
               toggleModal={this.toggleModal}
               isOpenModal={isModalOpen}
-              onEditCard ={this.handleEditCard}
+              onEditCard={this.handleEditCard}
             />
             {this.state.showForm === FORMS.DEPARTMENTS_FORM && (
               <InfoForm
