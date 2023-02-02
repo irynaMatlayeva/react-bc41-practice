@@ -13,9 +13,9 @@ class GeneralCardItem extends Component {
   };
 
   render() {
-    const { text, id, onDeleteCard, relation, toggleModal, isOpenModal } =
+    const { text, id, onDeleteCard, relation, toggleModal, isOpenModal, onEditCard } =
       this.props;
-
+      
     return (
       <Paper>
         <Item>
@@ -39,7 +39,10 @@ class GeneralCardItem extends Component {
                   } `}
                   children={
                     <InfoForm
+                      onSubmit={onEditCard}
                       title={relation === 'cities' ? 'Город' : 'Факультет'}
+                      idItem={id}
+                      relation={relation}
                     />
                   }
                 />

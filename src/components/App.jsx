@@ -41,7 +41,7 @@ class App extends Component {
   addTutor = tutor => {
     this.setState(({ tutors }) => {
       return {
-        tutors: [...tutors, tutor],
+        tutors: [...tutors, tutor], showForm: null
       };
     });
   };
@@ -68,9 +68,9 @@ class App extends Component {
     ) {
       alert('This city exist');
     } else {
-      const newCity = { text: name };
+      const newCity = { text: name, relation: 'cities' };
       this.setState(prev => ({
-        cities: [...prev.cities, newCity],
+        cities: [...prev.cities, newCity],  showForm: null 
       }));
     }
   };
@@ -83,9 +83,9 @@ class App extends Component {
     ) {
       alert('This department exist');
     } else {
-      const newDepartment = { text: name };
+      const newDepartment = { text: name, relation: 'departments' };
       this.setState(prev => ({
-        departments: [...prev.departments, newDepartment],
+        departments: [...prev.departments, newDepartment], showForm: null
       }));
     }
   };
@@ -97,8 +97,12 @@ class App extends Component {
   };
 
   toggleModal = action => {
-    this.setState({ isModalOpen: action });
+    this.setState(prev => ({isModalOpen: prev.isModalOpen === action ? null : action}));
   };
+
+  handleEditCard = (data) => {
+    console.log(data)
+  }
 
   render() {
     const { cities, departments, tutors, isModalOpen } = this.state;
@@ -141,6 +145,7 @@ class App extends Component {
               isOpenDown={this.handleToggleMenu}
               toggleModal={this.toggleModal}
               isOpenModal={isModalOpen}
+              onEditCard ={this.handleEditCard}
             />
             {this.state.showForm === FORMS.CITY_FORM && (
               <InfoForm
@@ -167,6 +172,7 @@ class App extends Component {
               isOpenDown={this.handleToggleMenu}
               toggleModal={this.toggleModal}
               isOpenModal={isModalOpen}
+              onEditCard ={this.handleEditCard}
             />
             {this.state.showForm === FORMS.DEPARTMENTS_FORM && (
               <InfoForm

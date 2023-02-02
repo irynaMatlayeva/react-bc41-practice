@@ -6,6 +6,7 @@ const GeneralCardList = ({
   onDeleteCard,
   toggleModal,
   isOpenModal,
+  onEditCard
 }) => {
   return (
     <ul>
@@ -19,6 +20,7 @@ const GeneralCardList = ({
           relation={relation}
           toggleModal={toggleModal}
           isOpenModal={isOpenModal}
+          onEditCard={onEditCard}
         />
       ))}
     </ul>
