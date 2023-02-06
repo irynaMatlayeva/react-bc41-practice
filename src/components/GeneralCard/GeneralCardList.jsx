@@ -6,14 +6,14 @@ const GeneralCardList = ({
   onDeleteCard,
   toggleModal,
   isOpenModal,
-  onEditCard
+  onEditCard,
 }) => {
   return (
     <ul>
-      {listData.map(({ text, relation }) => (
+      {listData.map(({ text, relation, id }) => (
         <GeneralCardItem
           id={text}
-          key={text}
+          key={id}
           text={text}
           isOpenDown={isOpenDown}
           onDeleteCard={onDeleteCard}
