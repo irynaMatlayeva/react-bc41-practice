@@ -12,7 +12,7 @@ const GeneralCardList = ({
     <ul>
       {listData.map(({ text, relation, id }) => (
         <GeneralCardItem
-          id={text}
+          id={id}
           key={id}
           text={text}
           isOpenDown={isOpenDown}

@@ -1,3 +1,6 @@
+import axios from 'axios';
+import { useState } from 'react';
+
 import {
   SideBar,
   Main,
@@ -10,14 +13,15 @@ import {
   TutorForm,
   InfoForm,
 } from '../components';
+
 import universityData from '../constants/universityData.json';
 import tutorIcon from '../assets/images/teachers-emoji.png';
 import FORMS from '../constants/forms';
-import { useState } from 'react';
 import useTutors from 'hooks/useTutors';
 import useCities from 'hooks/useCities';
 import useDepartments from 'hooks/useDepartments';
-import axios from 'axios';
+import { postDepartment, deleteDepartment } from '../api/departments';
+import { postCity, deleteCity } from '../api/citiesApi';
 
 const BASE_URL = 'https://63e0f4a959bb472a742ced69.mockapi.io';
 
@@ -54,7 +58,7 @@ const App = () => {
   };
 
   const addCity = name => {
-    axios.post('/cities', { text: name }).then(({ data }) => {
+    postCity({ text: name }).then(({ data }) => {
       if (cities.some(city => city.text.toLowerCase() === name.toLowerCase())) {
         alert('This city exist');
       } else {
@@ -67,7 +71,7 @@ const App = () => {
   };
 
   const addDepartment = name => {
-    axios.post('/departments', { name }).then(({ data: { id, name } }) => {
+    postDepartment({ name }).then(({ data: { id, name } }) => {
       if (
         departments.some(
           department => department.text.toLowerCase() === name.toLowerCase()
@@ -85,6 +89,7 @@ const App = () => {
 
   const handleDeleteCard = (id, relation) => {
     if (relation === 'cities') {
+      deleteCity(id).then(res => console.log(`deleteID`, res));
       const newCityArr = cities.filter(({ text }) => text !== id);
       setCities(newCityArr);
     } else {
