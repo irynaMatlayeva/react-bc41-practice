@@ -1,16 +1,12 @@
 import { useState, useEffect } from 'react';
 import universityData from '../constants/universityData.json';
-import axios from 'axios';
-
-const BASE_URL = 'https://63e0f4a959bb472a742ced69.mockapi.io';
-
-axios.defaults.baseURL = BASE_URL;
+import { getCities } from '../api/citiesApi';
 
 const useCities = () => {
   const [cities, setCities] = useState([]);
 
   useEffect(() => {
-    axios.get('/cities').then(({ data: cities }) => {
+    getCities().then(({ data: cities }) => {
       localStorage.setItem(
         'cities',
         JSON.stringify(

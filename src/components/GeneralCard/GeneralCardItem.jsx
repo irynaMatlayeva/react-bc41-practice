@@ -43,6 +43,7 @@ const GeneralCardItem = ({
                 } `}
                 children={
                   <InfoForm
+                    textItem={text}
                     onSubmit={onEditCard}
                     title={relation === 'cities' ? 'Город' : 'Факультет'}
                     idItem={id}

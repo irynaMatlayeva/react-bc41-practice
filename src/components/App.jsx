@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import {
   SideBar,
   Main,
@@ -10,28 +12,26 @@ import {
   TutorForm,
   InfoForm,
 } from '../components';
+
 import universityData from '../constants/universityData.json';
 import tutorIcon from '../assets/images/teachers-emoji.png';
 import FORMS from '../constants/forms';
-import { useState } from 'react';
 import useTutors from 'hooks/useTutors';
 import useCities from 'hooks/useCities';
 import useDepartments from 'hooks/useDepartments';
-import axios from 'axios';
-
-const BASE_URL = 'https://63e0f4a959bb472a742ced69.mockapi.io';
-
-axios.defaults.baseURL = BASE_URL;
+import {
+  postDepartment,
+  deleteDepartment,
+  updateDepartment,
+} from '../api/departments';
+import { postCity, deleteCity, updateCity } from '../api/citiesApi';
 
 const App = () => {
   const [tutors, setTutors] = useTutors();
 
   const [cities, setCities] = useCities();
 
-  //   console.log(cities);
-
   const [departments, setDepartments] = useDepartments();
-  //   console.log(departments);
 
   const [showForm, setShowForm] = useState(null);
 
@@ -54,7 +54,7 @@ const App = () => {
   };
 
   const addCity = name => {
-    axios.post('/cities', { text: name }).then(({ data }) => {
+    postCity({ text: name }).then(({ data }) => {
       if (cities.some(city => city.text.toLowerCase() === name.toLowerCase())) {
         alert('This city exist');
       } else {
@@ -67,7 +67,7 @@ const App = () => {
   };
 
   const addDepartment = name => {
-    axios.post('/departments', { name }).then(({ data: { id, name } }) => {
+    postDepartment({ name }).then(({ data: { id, name } }) => {
       if (
         departments.some(
           department => department.text.toLowerCase() === name.toLowerCase()
@@ -85,11 +85,18 @@ const App = () => {
 
   const handleDeleteCard = (id, relation) => {
     if (relation === 'cities') {
-      const newCityArr = cities.filter(({ text }) => text !== id);
-      setCities(newCityArr);
+      deleteCity(id).then(res => {
+        const resId = res.data.id;
+        const newCityArr = cities.filter(({ id }) => resId !== id);
+        setCities(newCityArr);
+      });
     } else {
-      const newDepartmentsArr = departments.filter(({ text }) => text !== id);
-      setDepartments(newDepartmentsArr);
+      deleteDepartment(id).then(res => {
+        const resId = res.data.id;
+        const newDepartmentsArr = departments.filter(({ id }) => resId !== id);
+
+        setDepartments(newDepartmentsArr);
+      });
     }
   };
 
@@ -101,21 +108,30 @@ const App = () => {
     const { id, name, relation } = data;
 
     if (relation === 'cities') {
-      const findIndexCity = cities.findIndex(item => item.text === id);
-      setCities(prevState => [
-        ...prevState.slice(0, findIndexCity),
-        { text: name, relation },
-        ...prevState.slice(findIndexCity + 1),
-      ]);
+      updateCity(id, { id, text: name }).then(res => {
+        const resId = res.data.id;
+
+        const findIndexCity = cities.findIndex(item => item.id === resId);
+
+        setCities(prevState => [
+          ...prevState.slice(0, findIndexCity),
+          { id: resId, text: res.data.text, relation },
+          ...prevState.slice(findIndexCity + 1),
+        ]);
+      });
     } else {
-      const findIndexDepartments = departments.findIndex(
-        item => item.text === id
-      );
-      setDepartments(prevState => [
-        ...prevState.slice(0, findIndexDepartments),
-        { text: name, relation },
-        ...prevState.slice(findIndexDepartments + 1),
-      ]);
+      updateDepartment(id, { id, name }).then(res => {
+        const resId = res.data.id;
+
+        const findIndexDepartments = departments.findIndex(
+          item => item.id === resId
+        );
+        setDepartments(prevState => [
+          ...prevState.slice(0, findIndexDepartments),
+          { id: resId, text: res.data.name, relation },
+          ...prevState.slice(findIndexDepartments + 1),
+        ]);
+      });
     }
   };
 
