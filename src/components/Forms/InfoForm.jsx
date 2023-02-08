@@ -10,6 +10,7 @@ const InfoForm = ({
   idItem,
   relation,
   textItem,
+  toggleModal
 }) => {
   const initialValues = { name: textItem || '' };
 
@@ -19,6 +20,7 @@ const InfoForm = ({
       ? { id: idItem, relation, name: values.name }
       : values.name;
     onSubmit(data);
+    toggleModal();
     resetForm();
     setSubmitting(false);
   };

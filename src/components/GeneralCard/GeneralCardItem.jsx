@@ -4,6 +4,7 @@ import { ReactComponent as Edit } from '../../assets/images/edit.svg';
 import { ReactComponent as Delete } from '../../assets/images/delete.svg';
 import { useState } from 'react';
 import { Item, BtnMenu, ContainerDropdown, InsideBtn } from './General.styled';
+import { useNavigate } from 'react-router-dom';
 
 const GeneralCardItem = ({
   text,
@@ -15,13 +16,19 @@ const GeneralCardItem = ({
   onEditCard,
 }) => {
   const [showDropDown, setShowDropDown] = useState(false);
+  const navigate = useNavigate();
+  const pathTo = () => {
+    if (relation !== 'departments') return;
+    navigate(`/departments/${id}`);
+  };
 
-  const toggleDropdown = () => {
+  const toggleDropdown = (event) => {
+    event.stopPropagation();
     setShowDropDown(!showDropDown);
   };
 
   return (
-    <Paper>
+    <Paper onClick={pathTo}>
       <Item>
         <span>{text}</span>
         <BtnMenu onClick={toggleDropdown}>
@@ -43,6 +50,7 @@ const GeneralCardItem = ({
                 } `}
                 children={
                   <InfoForm
+                    toggleModal={toggleModal}
                     textItem={text}
                     onSubmit={onEditCard}
                     title={relation === 'cities' ? 'Город' : 'Факультет'}
