@@ -1,12 +1,13 @@
 import PT from 'prop-types';
+import { NavLink } from 'react-router-dom';
 
 const MenuItem = ({ name, link, image }) => {
   return (
     <li>
-      <a href={link}>
+      <NavLink to={link}>
         {image}
         {name}
-      </a>
+      </NavLink >
     </li>
   );
 };
