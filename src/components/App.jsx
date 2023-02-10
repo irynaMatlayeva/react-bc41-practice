@@ -1,8 +1,6 @@
 import { useState, lazy, Suspense, useEffect } from 'react';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { SideBar, Main } from '../components';
-
-import useTutors from 'hooks/useTutors';
 import useCities from 'hooks/useCities';
 import useDepartments from 'hooks/useDepartments';
 import {
@@ -11,6 +9,8 @@ import {
   updateDepartment,
 } from '../api/departments';
 import { postCity, deleteCity, updateCity } from '../api/citiesApi';
+import { loadTutorsAction } from '../store/tutors/actions';
+import { useDispatch } from 'react-redux';
 
 const University = lazy(() => import('../pages/university/University'));
 const Departments = lazy(() => import('../pages/departments/Departments'));
@@ -25,7 +25,7 @@ const DepartmentHistory = lazy(() =>
 );
 
 const App = () => {
-  const [tutors, setTutors] = useTutors();
+  const dispatch = useDispatch();
 
   const [cities, setCities] = useCities();
 
@@ -36,23 +36,18 @@ const App = () => {
   const [isModalOpen, setIsModalOpen] = useState(null);
 
   const navigate = useNavigate();
-  const {pathname} = useLocation();
+  const { pathname } = useLocation();
 
   useEffect(() => {
-    if(pathname === '/') navigate('university')
-  }, [navigate, pathname])
+    if (pathname === '/') navigate('university');
+  }, [navigate, pathname]);
+
+  useEffect(() => {
+    dispatch(loadTutorsAction());
+  }, []);
 
   const onEdit = () => console.log('edit');
   const onDelete = () => console.log('delete');
-
-  const addTutor = tutor => {
-    setTutors([...tutors, tutor]);
-    setShowForm(null);
-  };
-
-  const deleteTutor = name => {
-    setTutors([...tutors.filter(({ firstName }) => firstName !== name)]);
-  };
 
   const handleShowForm = name => {
     setShowForm(showForm === name ? null : name);
@@ -183,9 +178,12 @@ const App = () => {
                   />
                 }
               />
-              <Route path=':departmentId' element={<DepartmentDetails departments={departments}/>}>
-                <Route path='description' element={<DepartmentDescription/>}/>
-                <Route path='history' element={<DepartmentHistory/>}/>
+              <Route
+                path=":departmentId"
+                element={<DepartmentDetails departments={departments} />}
+              >
+                <Route path="description" element={<DepartmentDescription />} />
+                <Route path="history" element={<DepartmentHistory />} />
               </Route>
             </Route>
           </Routes>

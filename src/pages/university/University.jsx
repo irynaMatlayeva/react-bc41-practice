@@ -13,14 +13,12 @@ import {
   InfoForm,
 } from 'components';
 
-
 const University = ({
   onEdit,
   onDelete,
-  deleteTutor,
+
   showForm,
-  tutors,
-  addTutor,
+
   handleShowForm,
   onDeleteCard,
   listData,
@@ -43,8 +41,8 @@ const University = ({
       </Section>
 
       <Section image={tutorIcon} title="Преподаватели">
-        <TutorList deleteTutor={deleteTutor} tutors={tutors} />
-        {showForm === FORMS.TUTOR_FORM && <TutorForm addTutor={addTutor} />}
+        <TutorList />
+        {showForm === FORMS.TUTOR_FORM && <TutorForm />}
         <Button
           action={() => handleShowForm(FORMS.TUTOR_FORM)}
           text={

@@ -17,12 +17,13 @@ const GeneralCardItem = ({
 }) => {
   const [showDropDown, setShowDropDown] = useState(false);
   const navigate = useNavigate();
-  const pathTo = () => {
+  const pathTo = e => {
+    if (e.target.closest('button')) return;
     if (relation !== 'departments') return;
     navigate(`/departments/${id}`);
   };
 
-  const toggleDropdown = (event) => {
+  const toggleDropdown = event => {
     event.stopPropagation();
     setShowDropDown(!showDropDown);
   };
