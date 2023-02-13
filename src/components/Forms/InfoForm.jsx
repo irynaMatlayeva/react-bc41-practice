@@ -2,6 +2,7 @@ import { Formik, Form, Field } from 'formik';
 import { object, string } from 'yup';
 import { ErrMessage } from './TutorForm.styled';
 import { Button } from 'components';
+import { useDispatch } from 'react-redux';
 
 const InfoForm = ({
   onSubmit,
@@ -10,8 +11,10 @@ const InfoForm = ({
   idItem,
   relation,
   textItem,
-  toggleModal
+  toggleModal,
 }) => {
+  const dispatch = useDispatch();
+
   const initialValues = { name: textItem || '' };
 
   const handleSubmitForm = (values, { setSubmitting, resetForm }) => {
@@ -19,7 +22,7 @@ const InfoForm = ({
     const data = idItem
       ? { id: idItem, relation, name: values.name }
       : values.name;
-    onSubmit(data);
+    dispatch(onSubmit(data));
     toggleModal();
     resetForm();
     setSubmitting(false);

@@ -1,14 +1,9 @@
 import { useState, lazy, Suspense, useEffect } from 'react';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { SideBar, Main } from '../components';
-import useCities from 'hooks/useCities';
 import useDepartments from 'hooks/useDepartments';
-import {
-  postDepartment,
-  deleteDepartment,
-  updateDepartment,
-} from '../api/departments';
-import { postCity, deleteCity, updateCity } from '../api/citiesApi';
+import { postDepartment } from '../api/departments';
+
 import { loadTutorsAction } from '../store/tutors/actions';
 import { useDispatch } from 'react-redux';
 
@@ -27,8 +22,6 @@ const DepartmentHistory = lazy(() =>
 const App = () => {
   const dispatch = useDispatch();
 
-  const [cities, setCities] = useCities();
-
   const [departments, setDepartments] = useDepartments();
 
   const [showForm, setShowForm] = useState(null);
@@ -44,26 +37,13 @@ const App = () => {
 
   useEffect(() => {
     dispatch(loadTutorsAction());
-  }, []);
+  }, [dispatch]);
 
   const onEdit = () => console.log('edit');
   const onDelete = () => console.log('delete');
 
   const handleShowForm = name => {
     setShowForm(showForm === name ? null : name);
-  };
-
-  const addCity = name => {
-    postCity({ text: name }).then(({ data }) => {
-      if (cities.some(city => city.text.toLowerCase() === name.toLowerCase())) {
-        alert('This city exist');
-      } else {
-        const newCity = { ...data, relation: 'cities' };
-
-        setCities([...cities, newCity]);
-        setShowForm(null);
-      }
-    });
   };
 
   const addDepartment = name => {
@@ -83,56 +63,8 @@ const App = () => {
     });
   };
 
-  const handleDeleteCard = (id, relation) => {
-    if (relation === 'cities') {
-      deleteCity(id).then(res => {
-        const resId = res.data.id;
-        const newCityArr = cities.filter(({ id }) => resId !== id);
-        setCities(newCityArr);
-      });
-    } else {
-      deleteDepartment(id).then(res => {
-        const resId = res.data.id;
-        const newDepartmentsArr = departments.filter(({ id }) => resId !== id);
-
-        setDepartments(newDepartmentsArr);
-      });
-    }
-  };
-
   const toggleModal = action => {
     setIsModalOpen(isModalOpen === action ? null : action);
-  };
-
-  const handleEditCard = data => {
-    const { id, name, relation } = data;
-
-    if (relation === 'cities') {
-      updateCity(id, { id, text: name }).then(res => {
-        const resId = res.data.id;
-
-        const findIndexCity = cities.findIndex(item => item.id === resId);
-
-        setCities(prevState => [
-          ...prevState.slice(0, findIndexCity),
-          { id: resId, text: res.data.text, relation },
-          ...prevState.slice(findIndexCity + 1),
-        ]);
-      });
-    } else {
-      updateDepartment(id, { id, name }).then(res => {
-        const resId = res.data.id;
-
-        const findIndexDepartments = departments.findIndex(
-          item => item.id === resId
-        );
-        setDepartments(prevState => [
-          ...prevState.slice(0, findIndexDepartments),
-          { id: resId, text: res.data.name, relation },
-          ...prevState.slice(findIndexDepartments + 1),
-        ]);
-      });
-    }
   };
 
   return (
@@ -147,17 +79,10 @@ const App = () => {
                 <University
                   onEdit={onEdit}
                   onDelete={onDelete}
-                  deleteTutor={deleteTutor}
                   showForm={showForm}
-                  tutors={tutors}
-                  addTutor={addTutor}
                   handleShowForm={handleShowForm}
-                  onDeleteCard={handleDeleteCard}
-                  listData={cities}
                   toggleModal={toggleModal}
                   isOpenModal={isModalOpen}
-                  onEditCard={handleEditCard}
-                  addCity={addCity}
                 />
               }
             />
@@ -167,11 +92,9 @@ const App = () => {
                 index ///departments
                 element={
                   <Departments
-                    handleDeleteCard={handleDeleteCard}
                     departments={departments}
                     toggleModal={toggleModal}
                     isOpenModal={isModalOpen}
-                    onEditCard={handleEditCard}
                     showForm={showForm}
                     addDepartment={addDepartment}
                     handleShowForm={handleShowForm}

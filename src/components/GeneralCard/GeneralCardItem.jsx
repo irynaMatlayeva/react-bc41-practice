@@ -5,16 +5,15 @@ import { ReactComponent as Delete } from '../../assets/images/delete.svg';
 import { useState } from 'react';
 import { Item, BtnMenu, ContainerDropdown, InsideBtn } from './General.styled';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import {
+  deleteCityOperation,
+  editCityOperation,
+} from 'store/cities/citiesOperations';
 
-const GeneralCardItem = ({
-  text,
-  id,
-  onDeleteCard,
-  relation,
-  toggleModal,
-  isOpenModal,
-  onEditCard,
-}) => {
+const GeneralCardItem = ({ text, id, relation, toggleModal, isOpenModal }) => {
+  const dispatch = useDispatch();
+
   const [showDropDown, setShowDropDown] = useState(false);
   const navigate = useNavigate();
   const pathTo = e => {
@@ -53,7 +52,7 @@ const GeneralCardItem = ({
                   <InfoForm
                     toggleModal={toggleModal}
                     textItem={text}
-                    onSubmit={onEditCard}
+                    onSubmit={editCityOperation}
                     title={relation === 'cities' ? 'Город' : 'Факультет'}
                     idItem={id}
                     relation={relation}
@@ -79,7 +78,11 @@ const GeneralCardItem = ({
                   <>
                     <Button action={toggleModal} text={'Нет'} />
                     <Button
-                      action={() => onDeleteCard(id, relation)}
+                      action={() => {
+                        relation === 'cities'
+                          ? dispatch(deleteCityOperation(id))
+                          : console.log('department');
+                      }}
                       text={'ДА'}
                     />
                   </>
