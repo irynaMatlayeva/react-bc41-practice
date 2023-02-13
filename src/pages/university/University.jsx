@@ -1,7 +1,11 @@
 import universityData from '../../constants/universityData.json';
 import tutorIcon from '../../assets/images/teachers-emoji.png';
 import FORMS from '../../constants/forms';
-
+import {
+  addCityOperation,
+  fetchCities,
+} from '../../store/cities/citiesOperations';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   TutorForm,
   GeneralCardList,
@@ -12,21 +16,24 @@ import {
   Button,
   InfoForm,
 } from 'components';
+import { useEffect } from 'react';
 
 const University = ({
   onEdit,
   onDelete,
-
   showForm,
-
   handleShowForm,
-  onDeleteCard,
-  listData,
   toggleModal,
   isOpenModal,
   onEditCard,
-  addCity,
 }) => {
+  const dispatch = useDispatch();
+  const cities = useSelector(state => state.cities.cities);
+
+  useEffect(() => {
+    dispatch(fetchCities());
+  }, [dispatch]);
+
   return (
     <>
       <Section isRightPosition isRow title="Информация о университете">
@@ -55,15 +62,14 @@ const University = ({
       </Section>
       <Section>
         <GeneralCardList
-          onDeleteCard={onDeleteCard}
-          listData={listData}
+          listData={cities}
           toggleModal={toggleModal}
           isOpenModal={isOpenModal}
           onEditCard={onEditCard}
         />
         {showForm === FORMS.CITY_FORM && (
           <InfoForm
-            onSubmit={addCity}
+            onSubmit={addCityOperation}
             title="Добавление города"
             placeholder="Город"
           />

@@ -3,7 +3,6 @@ import GeneralCardItem from './GeneralCardItem';
 const GeneralCardList = ({
   listData,
   isOpenDown,
-  onDeleteCard,
   toggleModal,
   isOpenModal,
   onEditCard,
@@ -16,7 +15,6 @@ const GeneralCardList = ({
           key={id}
           text={text}
           isOpenDown={isOpenDown}
-          onDeleteCard={onDeleteCard}
           relation={relation}
           toggleModal={toggleModal}
           isOpenModal={isOpenModal}
