@@ -10,6 +10,7 @@ import {
   deleteCityOperation,
   editCityOperation,
 } from 'store/cities/citiesOperations';
+import { deleteDepartmentsOperation, updateDepartmentsOperation } from 'store/department/departmentOperation';
 
 const GeneralCardItem = ({ text, id, relation, toggleModal, isOpenModal }) => {
   const dispatch = useDispatch();
@@ -28,9 +29,9 @@ const GeneralCardItem = ({ text, id, relation, toggleModal, isOpenModal }) => {
   };
 
   return (
-    <Paper onClick={pathTo}>
+    <Paper>
       <Item>
-        <span>{text}</span>
+        <span onClick={pathTo}>{text}</span>
         <BtnMenu onClick={toggleDropdown}>
           <BsThreeDotsVertical />
         </BtnMenu>
@@ -52,7 +53,7 @@ const GeneralCardItem = ({ text, id, relation, toggleModal, isOpenModal }) => {
                   <InfoForm
                     toggleModal={toggleModal}
                     textItem={text}
-                    onSubmit={editCityOperation}
+                    onSubmit={relation === 'cities' ? editCityOperation : updateDepartmentsOperation}
                     title={relation === 'cities' ? 'Город' : 'Факультет'}
                     idItem={id}
                     relation={relation}
@@ -81,7 +82,8 @@ const GeneralCardItem = ({ text, id, relation, toggleModal, isOpenModal }) => {
                       action={() => {
                         relation === 'cities'
                           ? dispatch(deleteCityOperation(id))
-                          : console.log('department');
+                          : dispatch(deleteDepartmentsOperation(id))
+                          toggleModal()
                       }}
                       text={'ДА'}
                     />
