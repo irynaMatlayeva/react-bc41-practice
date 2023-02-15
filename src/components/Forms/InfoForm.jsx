@@ -20,7 +20,7 @@ const InfoForm = ({
   const handleSubmitForm = (values, { setSubmitting, resetForm }) => {
     setSubmitting(true);
     const data = idItem
-      ? { id: idItem, relation, name: values.name }
+      ? { id: idItem, relation, text: values.name }
       : values.name;
     dispatch(onSubmit(data));
     toggleModal();

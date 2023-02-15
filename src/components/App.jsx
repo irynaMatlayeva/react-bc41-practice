@@ -1,8 +1,6 @@
 import { useState, lazy, Suspense, useEffect } from 'react';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { SideBar, Main } from '../components';
-import useDepartments from 'hooks/useDepartments';
-import { postDepartment } from '../api/departments';
 
 import { loadTutorsAction } from '../store/tutors/actions';
 import { useDispatch } from 'react-redux';
@@ -21,8 +19,6 @@ const DepartmentHistory = lazy(() =>
 
 const App = () => {
   const dispatch = useDispatch();
-
-  const [departments, setDepartments] = useDepartments();
 
   const [showForm, setShowForm] = useState(null);
 
@@ -46,22 +42,6 @@ const App = () => {
     setShowForm(showForm === name ? null : name);
   };
 
-  const addDepartment = name => {
-    postDepartment({ name }).then(({ data: { id, name } }) => {
-      if (
-        departments.some(
-          department => department.text.toLowerCase() === name.toLowerCase()
-        )
-      ) {
-        alert('This department exist');
-      } else {
-        const newDepartment = { text: name, id, relation: 'departments' };
-
-        setDepartments([...departments, newDepartment]);
-        setShowForm(null);
-      }
-    });
-  };
 
   const toggleModal = action => {
     setIsModalOpen(isModalOpen === action ? null : action);
@@ -92,18 +72,16 @@ const App = () => {
                 index ///departments
                 element={
                   <Departments
-                    departments={departments}
                     toggleModal={toggleModal}
                     isOpenModal={isModalOpen}
                     showForm={showForm}
-                    addDepartment={addDepartment}
                     handleShowForm={handleShowForm}
                   />
                 }
               />
               <Route
                 path=":departmentId"
-                element={<DepartmentDetails departments={departments} />}
+                element={<DepartmentDetails/>}
               >
                 <Route path="description" element={<DepartmentDescription />} />
                 <Route path="history" element={<DepartmentHistory />} />
