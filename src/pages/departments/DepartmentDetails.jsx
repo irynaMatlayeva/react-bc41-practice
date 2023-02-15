@@ -1,14 +1,21 @@
 import { Section, Button } from 'components';
 import { useMemo } from 'react';
 import { Outlet, useNavigate, useParams } from 'react-router-dom';
-const DepartmentDetails = ({ departments }) => {
+import { useSelector } from 'react-redux';
+import { departmentsSelector } from '../../store/department/selectors';
+
+const DepartmentDetails = () => {
   const { departmentId } = useParams();
   const navigate = useNavigate();
+  const departments = useSelector(departmentsSelector);
+
+  // eslint-disable-next-line
   const department = useMemo(() =>
     departments.find(item => item.id === departmentId)
   );
-  console.log(department);
-  console.log(departmentId);
+  
+  // console.log(department);
+  // console.log(departmentId);
   return (
     department && (
       <>
@@ -21,4 +28,5 @@ const DepartmentDetails = ({ departments }) => {
     )
   );
 };
+
 export default DepartmentDetails;

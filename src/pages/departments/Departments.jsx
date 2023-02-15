@@ -12,7 +12,6 @@ const Departments = ({
   isOpenModal,
   onEditCard,
   showForm,
-  addDepartment,
   handleShowForm,
 }) => {
 

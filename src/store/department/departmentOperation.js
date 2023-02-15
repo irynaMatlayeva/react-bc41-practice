@@ -48,8 +48,8 @@ export const updateDepartmentsOperation = createAsyncThunk(
   async ({ id, text }, thunkAPI) => {
     try {
       const res = await updateDepartment(id, { id, name: text });
-      console.log(res.data)
-    //   return res.data;
+      // console.log(res.data.id)
+      return res.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }

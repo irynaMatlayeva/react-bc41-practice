@@ -3,8 +3,7 @@ import {
   fetchDepartments,
   deleteDepartmentsOperation,
   addDepartmentsOperation,
-  updateDepartmentsOperation
-
+  updateDepartmentsOperation,
 } from './departmentOperation';
 
 const initialState = { items: [] };
@@ -41,10 +40,11 @@ const deparmentsSlice = createSlice({
         }
       })
       .addCase(updateDepartmentsOperation.fulfilled, (state, { payload }) => {
-        console.log(payload)
         const department = convertToFrontDepartments(payload);
-        console.log(department)
-    })
+        state.items = state.items.map(item =>
+          item.id === department.id ? department : item
+        );
+      });
   },
 });
 
